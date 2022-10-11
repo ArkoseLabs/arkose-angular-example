@@ -21,3 +21,4 @@ export class LoginWithInlineArkoseComponent implements OnInit {
     alert(errorMessage);
   }
 }
+
