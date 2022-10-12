@@ -25,13 +25,13 @@ export class ModalArkoseComponent {
 
   constructor(
     private renderer: Renderer2,
-    private _arkoseScriptService: ArkoseScriptService,
+    private arkoseScriptService: ArkoseScriptService,
     private zone: NgZone
   ) {}
 
   ngOnInit(): void {
     // This injects the Arkose script into the angular dom
-    const scriptElement = this._arkoseScriptService.loadScript(
+    const scriptElement = this.arkoseScriptService.loadScript(
       this.renderer,
       environment.arkoseKey
     );
