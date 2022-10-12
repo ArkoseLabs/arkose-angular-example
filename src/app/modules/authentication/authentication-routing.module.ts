@@ -7,21 +7,20 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'login/inline'
+    redirectTo: 'login/inline',
   },
   {
     path: 'login/inline',
-    component: LoginWithInlineArkoseComponent
+    component: LoginWithInlineArkoseComponent,
   },
   {
     path: 'login/modal',
-    component: LoginWithModalArkoseComponent
+    component: LoginWithModalArkoseComponent,
   },
-
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AuthenticationRoutingModule { }
+export class AuthenticationRoutingModule {}

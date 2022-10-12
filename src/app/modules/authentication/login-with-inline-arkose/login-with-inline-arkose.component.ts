@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-with-inline-arkose',
-  templateUrl: './login-with-inline-arkose.component.html'
+  templateUrl: './login-with-inline-arkose.component.html',
 })
 export class LoginWithInlineArkoseComponent implements OnInit {
   public showArkoseEC: boolean;
@@ -11,7 +11,7 @@ export class LoginWithInlineArkoseComponent implements OnInit {
     this.showArkoseEC = false;
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   onCompleted(token: string) {
     this._router.navigate(['/dashboard']);
@@ -21,4 +21,3 @@ export class LoginWithInlineArkoseComponent implements OnInit {
     alert(errorMessage);
   }
 }
-

@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "arkose-demo": {
+    "arkose-angular-demo": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/arkose-demo",
+            "outputPath": "dist/arkose-angular-demo",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -30,7 +30,6 @@
               "src/assets"
             ],
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -72,10 +71,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "arkose-demo:build:production"
+              "browserTarget": "arkose-angular-demo:build:production"
             },
             "development": {
-              "browserTarget": "arkose-demo:build:development"
+              "browserTarget": "arkose-angular-demo:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -83,7 +82,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "arkose-demo:build"
+            "browserTarget": "arkose-angular-demo:build"
           }
         },
         "test": {
@@ -98,7 +97,6 @@
               "src/assets"
             ],
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -107,5 +105,5 @@
       }
     }
   },
-  "defaultProject": "arkose-demo"
+  "defaultProject": "arkose-angular-demo"
 }

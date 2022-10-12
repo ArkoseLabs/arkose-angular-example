@@ -1,4 +1,3 @@
-import { BehaviorSubject } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable, Renderer2 } from '@angular/core';
 declare global {
@@ -9,21 +8,13 @@ declare global {
   }
 }
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ArkoseScriptService {
-  public callBackListener = new BehaviorSubject('');
-  constructor(@Inject(DOCUMENT) private document: Document) { }
+  constructor(@Inject(DOCUMENT) private document: Document) {}
 
-  /**
-   * Append the JS tag to the Document Body.
-   * @param renderer The Angular Renderer
-   * @returns the script element
-   */
-  public loadScript(
-    renderer: Renderer2,
-    publicKey: string
-  ): HTMLScriptElement {
+  // Append the JS tag to the Document Body.
+  public loadScript(renderer: Renderer2, publicKey: string): HTMLScriptElement {
     const script = renderer.createElement('script');
     script.type = 'text/javascript';
     script.src = `https://client-api.arkoselabs.com/v2/${publicKey}/api.js`;

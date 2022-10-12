@@ -8,17 +8,13 @@ import { LoginWithInlineArkoseComponent } from './login-with-inline-arkose/login
 import { LoginWithModalArkoseComponent } from './login-with-modal-arkose/login-with-modal-arkose.component';
 
 @NgModule({
-  declarations: [
-    LoginWithInlineArkoseComponent,
-    LoginWithModalArkoseComponent,
-  ],
+  declarations: [LoginWithInlineArkoseComponent, LoginWithModalArkoseComponent],
   imports: [
     CommonModule,
     AuthenticationRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
-
-  ]
+    SharedModule,
+  ],
 })
-export class AuthenticationModule { }
+export class AuthenticationModule {}

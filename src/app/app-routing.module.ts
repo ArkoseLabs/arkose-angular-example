@@ -4,16 +4,22 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./modules/authentication/authentication.module').then((m) => m.AuthenticationModule),
+    loadChildren: () =>
+      import('./modules/authentication/authentication.module').then(
+        (m) => m.AuthenticationModule
+      ),
   },
   {
     path: 'dashboard',
-    loadChildren: () => import('./modules/dashboard/dashboard.module').then((m) => m.DashboardModule),
-  }
+    loadChildren: () =>
+      import('./modules/dashboard/dashboard.module').then(
+        (m) => m.DashboardModule
+      ),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

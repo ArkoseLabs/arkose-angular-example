@@ -1,10 +1,16 @@
-import { Component, EventEmitter, NgZone, Output, Renderer2 } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  NgZone,
+  Output,
+  Renderer2,
+} from '@angular/core';
 import { ArkoseScriptService } from 'src/app/services/arkose-script.service';
 import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-arkose-modal',
-  templateUrl: './arkose-modal.component.html'
+  templateUrl: './arkose-modal.component.html',
 })
 export class ModalArkoseComponent {
   @Output() onReady = new EventEmitter();
@@ -17,51 +23,47 @@ export class ModalArkoseComponent {
   @Output() onError = new EventEmitter();
   @Output() onFailed = new EventEmitter();
 
-  constructor(private renderer: Renderer2,
+  constructor(
+    private renderer: Renderer2,
     private _arkoseScriptService: ArkoseScriptService,
-    private zone: NgZone) { }
+    private zone: NgZone
+  ) {}
 
   ngOnInit(): void {
-    //It inject arkose script into angular dom
+    // This injects the Arkose script into the angular dom
     const scriptElement = this._arkoseScriptService.loadScript(
       this.renderer,
       environment.arkoseKey
     );
 
-    //Script will inject required html css after script is properly loaded
+    // This will inject required html and css after the Arkose script is properly loaded
     scriptElement.onload = () => {
       console.log('Arkose API Script loaded');
       window.setupEnforcement = this.setupEnforcement.bind(this);
     };
 
-    //This is the callback which will throw error is script is not properly injected
+    // If there is an error loading the Arkose script this callback will be called
     scriptElement.onerror = () => {
       console.log('Could not load the Arkose API Script!');
     };
   }
-  // This is the function which will give result after puzzle is loaded
+  // This is the function that will be called after the Arkose script has loaded
   setupEnforcement = (myEnforcementObject: any) => {
     window.myModalEnforcement = myEnforcementObject;
     window.myModalEnforcement.setConfig({
-      // We need to pass id of the div where we want to inject the arkose ec
-      selector: '#arkose-ec',
       mode: 'modal',
       onReady: () => {
         this.zone.run(() => {
           this.onReady.emit();
-          // window.myModalEnforcement.run();
-          console.log('onReady');
         });
       },
       onShown: () => {
         this.zone.run(() => {
-          console.log('onShown');
           this.onShown.emit();
         });
       },
       onShow: () => {
         this.zone.run(() => {
-          console.log('onShow');
           this.onShow.emit();
         });
       },
@@ -71,7 +73,6 @@ export class ModalArkoseComponent {
         });
       },
       onCompleted: (response: any) => {
-        console.log('onComp');
         if (response.token) {
           this.zone.run(() => {
             this.onCompleted.emit(response.token);
@@ -79,23 +80,21 @@ export class ModalArkoseComponent {
         }
       },
       onReset: () => {
-        console.log('onReset');
         this.zone.run(() => {
           this.onReset.emit();
         });
       },
       onHide: () => {
-        console.log('onHide');
         this.zone.run(() => {
           this.onHide.emit();
         });
       },
       onError: (response: any) => {
-        console.log('onError');
-        this.onError.emit(response);
+        this.zone.run(() => {
+          this.onError.emit(response);
+        });
       },
       onFailed: (response: any) => {
-        console.log('onFailed');
         this.zone.run(() => {
           this.onFailed.emit(response);
         });

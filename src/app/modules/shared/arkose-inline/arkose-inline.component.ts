@@ -1,10 +1,17 @@
-import { Component, EventEmitter, OnInit, Output, Renderer2, NgZone } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  Renderer2,
+  NgZone,
+} from '@angular/core';
 import { ArkoseScriptService } from 'src/app/services/arkose-script.service';
 import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-arkose-inline',
-  templateUrl: './arkose-inline.component.html'
+  templateUrl: './arkose-inline.component.html',
 })
 export class ArkoseInlineComponent implements OnInit {
   @Output() onReady = new EventEmitter();
@@ -16,7 +23,33 @@ export class ArkoseInlineComponent implements OnInit {
   @Output() onHide = new EventEmitter();
   @Output() onError = new EventEmitter();
   @Output() onFailed = new EventEmitter();
-  // This is the function which will give result after puzzle is loaded
+
+  constructor(
+    private renderer: Renderer2,
+    private _arkoseScriptService: ArkoseScriptService,
+    private zone: NgZone
+  ) {}
+
+  ngOnInit(): void {
+    // This injects the Arkose script into the angular dom
+    const scriptElement = this._arkoseScriptService.loadScript(
+      this.renderer,
+      environment.arkoseKey
+    );
+
+    // This will inject required html and css after the Arkose script is properly loaded
+    scriptElement.onload = () => {
+      console.log('Arkose API Script loaded');
+      window.setupEnforcement = this.setupEnforcement.bind(this);
+    };
+
+    // If there is an error loading the Arkose script this callback will be called
+    scriptElement.onerror = () => {
+      console.log('Could not load the Arkose API Script!');
+    };
+  }
+
+  // This is the function that will be called after the Arkose script has loaded
   setupEnforcement = (myEnforcement: any) => {
     window.myInlineEnforcement = myEnforcement;
     window.myInlineEnforcement.setConfig({
@@ -60,7 +93,9 @@ export class ArkoseInlineComponent implements OnInit {
         });
       },
       onError: (response: any) => {
-        this.onError.emit(response);
+        this.zone.run(() => {
+          this.onError.emit(response);
+        });
       },
       onFailed: (response: any) => {
         this.zone.run(() => {
@@ -69,27 +104,4 @@ export class ArkoseInlineComponent implements OnInit {
       },
     });
   };
-
-  ngOnInit(): void {
-    //It inject arkose script into angular dom
-    const scriptElement = this._arkoseScriptService.loadScript(
-      this.renderer,
-      environment.arkoseKey
-    );
-
-    //Script will inject required html css after script is properly loaded
-    scriptElement.onload = () => {
-      console.log('Arkose API Script loaded');
-      window.setupEnforcement = this.setupEnforcement.bind(this);
-    };
-
-    //This is the callback which will throw error is script is not properly injected
-    scriptElement.onerror = () => {
-      console.log('Could not load the Arkose API Script!');
-    };
-  }
-  constructor(private renderer: Renderer2,
-    private _arkoseScriptService: ArkoseScriptService,
-    private zone: NgZone) { }
-
 }

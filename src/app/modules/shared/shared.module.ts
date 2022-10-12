@@ -7,16 +7,9 @@ import { ArkoseInlineComponent } from './arkose-inline/arkose-inline.component';
   declarations: [
     ModalArkoseComponent,
     ArkoseInlineComponent,
-    ModalArkoseComponent
-  ],
-  imports: [
-    CommonModule,
-
-  ],
-  exports: [
     ModalArkoseComponent,
-    ArkoseInlineComponent,
-    ModalArkoseComponent
-  ]
+  ],
+  imports: [CommonModule],
+  exports: [ModalArkoseComponent, ArkoseInlineComponent, ModalArkoseComponent],
 })
-export class SharedModule { }
+export class SharedModule {}

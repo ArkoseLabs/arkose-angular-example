@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-with-arkose-modal',
-  templateUrl: './login-with-modal-arkose.component.html'
+  templateUrl: './login-with-modal-arkose.component.html',
 })
 export class LoginWithModalArkoseComponent implements OnInit {
   public arkoseToken: string | undefined;
@@ -11,7 +11,7 @@ export class LoginWithModalArkoseComponent implements OnInit {
     this.arkoseToken = undefined;
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   onCompleted(token: string) {
     this.arkoseToken = token;
@@ -28,4 +28,3 @@ export class LoginWithModalArkoseComponent implements OnInit {
     }
   }
 }
-
