@@ -5,6 +5,7 @@ import {
   Output,
   Renderer2,
   NgZone,
+  OnDestroy,
 } from '@angular/core';
 import { ArkoseScriptService } from 'src/app/services/arkose-script.service';
 import { environment } from 'src/environments/environment.prod';
@@ -51,6 +52,7 @@ export class ArkoseInlineComponent implements OnInit {
 
   // This is the function that will be called after the Arkose script has loaded
   setupEnforcement = (myEnforcement: any) => {
+    console.log('call setup');
     window.myInlineEnforcement = myEnforcement;
     window.myInlineEnforcement.setConfig({
       selector: '#arkose-ec',

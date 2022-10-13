@@ -51,7 +51,7 @@ export class ModalArkoseComponent {
   setupEnforcement = (myEnforcementObject: any) => {
     window.myModalEnforcement = myEnforcementObject;
     window.myModalEnforcement.setConfig({
-      mode: 'modal',
+      mode: 'lightbox',
       onReady: () => {
         this.zone.run(() => {
           this.onReady.emit();
