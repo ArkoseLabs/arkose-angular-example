@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from '../../../../environments/environment.prod';
 
 @Component({
   selector: 'app-login-with-arkose-modal',
   templateUrl: './login-with-modal-arkose.component.html',
 })
 export class LoginWithModalArkoseComponent implements OnInit {
+  public publicKey: string;
   public arkoseToken: string | undefined;
   constructor(private _router: Router) {
     this.arkoseToken = undefined;
+    this.publicKey = environment.arkoseKey;
   }
 
   ngOnInit(): void {}
@@ -24,7 +27,7 @@ export class LoginWithModalArkoseComponent implements OnInit {
 
   onSubmit() {
     if (!this.arkoseToken) {
-      window.myModalEnforcement.run();
+      window.myEnforcement.run();
     }
   }
 }

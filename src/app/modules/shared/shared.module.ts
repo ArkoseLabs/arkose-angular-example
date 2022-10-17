@@ -1,15 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ModalArkoseComponent } from './arkose-modal/arkose-modal.component';
-import { ArkoseInlineComponent } from './arkose-inline/arkose-inline.component';
+import { ArkoseComponent } from './arkose/arkose.component';
 
 @NgModule({
   declarations: [
-    ModalArkoseComponent,
-    ArkoseInlineComponent,
-    ModalArkoseComponent,
+    ArkoseComponent,
   ],
   imports: [CommonModule],
-  exports: [ModalArkoseComponent, ArkoseInlineComponent, ModalArkoseComponent],
+  exports: [ArkoseComponent],
 })
 export class SharedModule {}

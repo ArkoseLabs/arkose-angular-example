@@ -24,10 +24,9 @@ Start the server
 
 ## Documentation
 
-It contains a shared module which has two components.
+It contains a shared module which has arkose component.
 
-- arkose-inline: Arkose Enforcement Challenge in Inline mode on HTML page
-- arkose-modal: Arkose Enforcement Challenge over a Modal mode on HTML page
+- arkose: Arkose Enforcement Challenge over a Modal mode or in Inline mode on HTML page
 
 #### To Show Arkose Modal
 

@@ -9,13 +9,16 @@
         </a>
       </ng-container>
       <div class="mt-15">
-        <app-arkose-inline
+        <arkose
           *ngIf="showArkoseEC"
+          [publicKey]="publicKey"
+          selector="arkose-ec"
+          mode="inline"
           (onCompleted)="onCompleted($event)"
           (onError)="onError($event)"
           class="mt-15"
         >
-        </app-arkose-inline>
+        </arkose>
       </div>
     </div>
 </form>

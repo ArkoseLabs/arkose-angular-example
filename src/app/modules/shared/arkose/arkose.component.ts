@@ -1,18 +1,23 @@
 import {
   Component,
   EventEmitter,
-  NgZone,
+  OnInit,
   Output,
   Renderer2,
+  NgZone,
+  OnDestroy,
+  Input,
 } from '@angular/core';
-import { ArkoseScriptService } from 'src/app/services/arkose-script.service';
-import { environment } from 'src/environments/environment.prod';
+import { ArkoseScriptService } from '../../../services/arkose-script.service';
 
 @Component({
-  selector: 'app-arkose-modal',
-  templateUrl: './arkose-modal.component.html',
+  selector: 'arkose',
+  templateUrl: './arkose.component.html',
 })
-export class ModalArkoseComponent {
+export class ArkoseComponent implements OnInit, OnDestroy {
+  @Input() public publicKey: string;
+  @Input() public mode?: 'inline' | 'lightbox';
+  @Input() public selector?: string;
   @Output() onReady = new EventEmitter();
   @Output() onShown = new EventEmitter();
   @Output() onShow = new EventEmitter();
@@ -27,13 +32,15 @@ export class ModalArkoseComponent {
     private renderer: Renderer2,
     private arkoseScriptService: ArkoseScriptService,
     private zone: NgZone
-  ) {}
+  ) {
+    this.publicKey = '';
+  }
 
   ngOnInit(): void {
     // This injects the Arkose script into the angular dom
     const scriptElement = this.arkoseScriptService.loadScript(
       this.renderer,
-      environment.arkoseKey
+      this.publicKey
     );
 
     // This will inject required html and css after the Arkose script is properly loaded
@@ -47,11 +54,22 @@ export class ModalArkoseComponent {
       console.log('Could not load the Arkose API Script!');
     };
   }
+
+  ngOnDestroy(): void {
+    if (window.myEnforcement) {
+      delete window.myEnforcement;
+    }
+    if (window.setupEnforcement) {
+      delete window.setupEnforcement;
+    }
+  }
+
   // This is the function that will be called after the Arkose script has loaded
-  setupEnforcement = (myEnforcementObject: any) => {
-    window.myModalEnforcement = myEnforcementObject;
-    window.myModalEnforcement.setConfig({
-      mode: 'lightbox',
+  setupEnforcement = (myEnforcement: any) => {
+    window.myEnforcement = myEnforcement;
+    window.myEnforcement.setConfig({
+      selector: this.selector && `#${this.selector}`,
+      mode: this.mode,
       onReady: () => {
         this.zone.run(() => {
           this.onReady.emit();
