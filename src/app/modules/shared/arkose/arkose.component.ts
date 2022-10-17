@@ -16,7 +16,7 @@ import { ArkoseScriptService } from '../../../services/arkose-script.service';
 })
 export class ArkoseComponent implements OnInit, OnDestroy {
   @Input() public publicKey: string;
-  @Input() public mode?: 'inline' | 'lightbox';
+  @Input() public mode?: 'lightbox' | 'inline';
   @Input() public selector?: string;
   @Output() onReady = new EventEmitter();
   @Output() onShown = new EventEmitter();
